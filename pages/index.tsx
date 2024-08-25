@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover"></meta>
 
+// The main landing page where user can go straight to uploading with a click of a button.
 export default function Home() {
   return (
     <BackgroundBeamsWithCollision>
