@@ -1,7 +1,6 @@
 import { ReactNode, useState, createContext, useContext } from "react";
 
 //Creating a global state for the entire app, to make storing and managing data easier and more efficient. 
-
 //Types
 interface tcContextType {
     transC: string | null;

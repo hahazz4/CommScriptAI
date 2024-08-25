@@ -8,21 +8,29 @@ import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 
 // The page where user is prompted to upload their transcript in pdf format, and gets routed to /playground.
-export default function ActionArea(){
+export default function ScriptArea(){
     const {setTransC} = useTransC();
     const router = useRouter();
     const [files, setFiles] = useState<File[]>([]);
-    const handleFileUpload = (files: File[]) => {
-        if (files.length > 0){
-            const reader = new FileReader()
-            reader.onload = function (e){
-                const transC = e.target?.result?.toString()
-                setTransC(transC || "")
-                router.push("/playground")
+
+    const handleFileUpload = async (files: File[]) => {
+        if (files.length > 0) {
+            const formData = new FormData();
+            formData.append("file", files[0]);
+    
+            const res = await fetch("/api/route", {
+                method: "POST",
+                body: formData,
+            });
+    
+            if (res.ok) {
+                const data = await res.json();
+                setTransC(data.text);
+                router.push("/playground");
+            } else {
+                console.error("Error uploading file:", res.statusText);
             }
-            reader.readAsText(files[0]) //reading first file (0 since indexing)
         }
-        setFiles(files);
         // console.log(files);
     }
 
